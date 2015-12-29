@@ -45,7 +45,7 @@ UrlEmbededProcessor.prototype.process = function (file, processContext, callback
     var fileContent = file.data;
     var filePath = file.path;
 
-    var basePath = path.resolve(__dirname, '..');
+    var basePath = process.cwd();
 
     var urlRegex = new RegExp(this.inclusive ? INCLUSIVE_URL_REGEX : EXCLUSIVE_URL_REGEX, 'g');
 
