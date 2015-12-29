@@ -32,6 +32,24 @@ Specifies the mode of embedding.
 * `false` (exclusive) means that every URL is embedded, except those that are marked with `/* noembed */` comment.
 
 
+### extensions
+
+Type: `Array`
+
+Default: `['.jpg', '.png']`
+
+Specifies the extensions of urls to be embed.
+
+
+### files
+
+Type: `Array`
+
+Default: `['*.styl', '*.css', '*.less']`
+
+Input files.
+
+
 ### Excluding URLs manually (when inclusive: false)
 
 ```css
