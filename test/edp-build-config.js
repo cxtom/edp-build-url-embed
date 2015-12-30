@@ -20,7 +20,9 @@ exports.getProcessors = function () {
 
     var UrlEmbededProcessor = require('../index.js');
 
-    var urlEmbeded = new UrlEmbededProcessor();
+    var urlEmbeded = new UrlEmbededProcessor({
+        extensions: ['.ttf', '.png']
+    });
 
     return {
         'default': [

@@ -2,12 +2,23 @@
 
 .include-me {
     background-image: url('include_me.png'); /* embed */
+    background-repeat: no-repeat;
 }
 
 .exclude-me {
     background-image: url('exclude_me.png'); /* noembed */
+    background-repeat: no-repeat;
 }
 
 .include-me1 {
     background: transparent url('include_me.png') /* embed */ center center no-repeat;
+    color: #fff;
+}
+
+@font-face {font-family: "iconfont";
+  src: url('iconfont.eot'); /* IE9*/
+  src: url('iconfont.eot?#iefix') format('embedded-opentype'), /* IE6-IE8 */
+  url('iconfont.woff') format('woff'), /* chrome, firefox */
+  url('iconfont.ttf') /* embed */ format('truetype'), /* chrome, firefox, opera, Safari, Android, iOS 4.2+*/
+  url('iconfont.svg#iconfont') format('svg'); /* iOS 4.1- */
 }
