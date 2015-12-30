@@ -13,17 +13,18 @@ exports.output = path.resolve(__dirname, 'output');
 // var moduleEntries = 'html,htm,phtml,tpl,vm,js';
 // var pageEntries = 'html,htm,phtml,tpl,vm';
 
-var UrlEmbededProcessor = require('../index.js');
-
 exports.getProcessors = function () {
     var lessProcessor = new LessCompiler();
     var cssProcessor = new CssCompressor();
+
+
+    var UrlEmbededProcessor = require('../index.js');
 
     var urlEmbeded = new UrlEmbededProcessor();
 
     return {
         'default': [
-            lessProcessor, urlEmbeded, cssProcessor
+            urlEmbeded, lessProcessor, cssProcessor
         ]
     };
 };

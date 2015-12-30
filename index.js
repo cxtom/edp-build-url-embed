@@ -66,14 +66,12 @@ UrlEmbededProcessor.prototype.process = function (file, processContext, callback
 
         var resource = processContext.getFileByPath(url);
 
-        // console.log(resource);
-
         assert(resource, 'embed resource not exist:' + url);
 
         var base64Content = resource.data.toString('base64');
         var mimeType = mime.lookup(url);
 
-        var dataUri = '("data:' + mimeType + ';base64,' + base64Content + '")';
+        var dataUri = 'url("data:' + mimeType + ';base64,' + base64Content + '")';
 
         return dataUri;
 
