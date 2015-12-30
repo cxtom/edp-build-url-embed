@@ -11,7 +11,7 @@ var mime = require('mime');
 var assert = require('assert');
 
 
-var BASE_URL_REGEX = 'url\\(["\']?([^"\'\\(\\)]+?)["\']?\\)[};,!\\s]';
+var BASE_URL_REGEX = 'url\\(["\']?([^"\'\\(\\)]+?)["\']?\\)([};,!\\s])';
 var EXCLUSIVE_URL_REGEX = BASE_URL_REGEX + '(?!\\s*?\\/\\*\\s*?noembed\\s*?\\*\\/)';
 var INCLUSIVE_URL_REGEX = BASE_URL_REGEX + '\\s*?\\/\\*\\s*?embed\\s*?\\*\\/';
 var EMBEDDABLE_URL_REGEX = /^data:/;
@@ -51,14 +51,14 @@ UrlEmbededProcessor.prototype.process = function (file, processContext, callback
 
     var me = this;
 
-    var data = fileContent.replace(urlRegex, function ($0, $1) {
+    var data = fileContent.replace(urlRegex, function ($0, $1, $2) {
 
         var url = $1;
 
         if (url.match(EMBEDDABLE_URL_REGEX)
             || url.match(REMOTE_URL_REGEX)
             || me.extensions.indexOf(path.extname(url)) < 0) {
-            return url;
+            return 'url("' + $1 + '")' + $2;
         }
 
         url = path.resolve(path.dirname(filePath), url);
@@ -71,7 +71,7 @@ UrlEmbededProcessor.prototype.process = function (file, processContext, callback
         var base64Content = resource.data.toString('base64');
         var mimeType = mime.lookup(url);
 
-        var dataUri = 'url("data:' + mimeType + ';base64,' + base64Content + '")';
+        var dataUri = 'url("data:' + mimeType + ';base64,' + base64Content + '")' + $2;
 
         return dataUri;
 
