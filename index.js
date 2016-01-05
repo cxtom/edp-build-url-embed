@@ -1,5 +1,5 @@
 /**
- * @file UrlEmbededProcessor
+ * @file UrlEmbedProcessor
  * @author cxtom(cxtom2010@gmail.com)
  */
 
@@ -17,19 +17,29 @@ var INCLUSIVE_URL_REGEX = BASE_URL_REGEX + '\\s*?\\/\\*\\s*?embed\\s*?\\*\\/';
 var EMBEDDABLE_URL_REGEX = /^data:/;
 var REMOTE_URL_REGEX = /^(http|https):/;
 
-function UrlEmbededProcessor(options) {
+function UrlEmbedProcessor(options) {
     AbstractProcessor.call(this, options);
 }
 
-util.inherits(UrlEmbededProcessor, AbstractProcessor);
+util.inherits(UrlEmbedProcessor, AbstractProcessor);
 
 
-UrlEmbededProcessor.DEFAULT_OPTIONS = {
-    name: 'UrlEmbededProcessor',
+UrlEmbedProcessor.DEFAULT_OPTIONS = {
+
+    name: 'UrlEmbedProcessor',
+
     files: ['*.styl', '*.css', '*.less'],
+
     extensions: ['.jpg', '.png'],
 
-    inclusive: true
+    inclusive: true,
+
+    /**
+     * 资源大小若超过该设定值（单位：字节），则跳过，不会转换为base64
+     *
+     * @type {number}
+     */
+    maxSize: Number.MAX_VALUE
 };
 
 
@@ -40,7 +50,7 @@ UrlEmbededProcessor.DEFAULT_OPTIONS = {
  * @param {ProcessContext} processContext 构建环境对象
  * @param {Function} callback 处理完成回调函数
  */
-UrlEmbededProcessor.prototype.process = function (file, processContext, callback) {
+UrlEmbedProcessor.prototype.process = function (file, processContext, callback) {
 
     var fileContent = file.data;
     var filePath = file.path;
@@ -68,6 +78,10 @@ UrlEmbededProcessor.prototype.process = function (file, processContext, callback
 
         assert(resource, 'embed resource not exist:' + url);
 
+        if (resource.data.length > me.maxSize) {
+            return 'url("' + $1 + '")' + $2;
+        }
+
         var base64Content = resource.data.toString('base64');
         var mimeType = mime.lookup(url);
 
@@ -83,4 +97,4 @@ UrlEmbededProcessor.prototype.process = function (file, processContext, callback
 
 };
 
-module.exports = UrlEmbededProcessor;
+module.exports = UrlEmbedProcessor;

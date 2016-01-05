@@ -18,10 +18,11 @@ exports.getProcessors = function () {
     var cssProcessor = new CssCompressor();
 
 
-    var UrlEmbededProcessor = require('../index.js');
+    var UrlEmbededProcessor = require('../index');
 
     var urlEmbeded = new UrlEmbededProcessor({
-        extensions: ['.ttf', '.png']
+        extensions: ['.ttf', '.png'],
+        maxSize: 1500
     });
 
     return {
