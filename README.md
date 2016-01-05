@@ -50,6 +50,15 @@ Default: `['*.styl', '*.css', '*.less']`
 Input files.
 
 
+### maxSize
+
+Type: `number`
+
+Default: `Number.MAX_VALUE`
+
+Specifies the maxSize of the size of file.
+
+
 ### Excluding URLs manually (when inclusive: false)
 
 ```css
